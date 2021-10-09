@@ -38,11 +38,15 @@ const Borad = () => {
   const [winner, setWinner] = useState(null);
 
   const clickSquareAction = (i) => {
+    if(squares[i] !== ''){ return }
+
     const newSquares = [...squares];
     const nextPlayer = xIsNext ? 'X' : 'O'
     newSquares[i] = nextPlayer;
 
-    setSquares(newSquares);
+    if(winner == null){
+      setSquares(newSquares);
+    }
     if(calculateWinner(newSquares) != null){
       setWinner(calculateWinner(newSquares))
     }
