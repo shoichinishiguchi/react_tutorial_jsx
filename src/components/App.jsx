@@ -33,10 +33,14 @@ const Square = (props) => {
 const Borad = () => {
   const [squares, setSquares] = useState(Array(9).fill(''));
 
+  const [xIsNext, setXIsNext] = useState(true);
+
   const clickSquareAction = (i) => {
     const newSquares = [...squares];
-    newSquares[i] = 'X';
+    const nextPlayer = xIsNext ? 'X' : 'O'
+    newSquares[i] = nextPlayer;
     setSquares(newSquares);
+    setXIsNext(!xIsNext);
   }
 
   return(
