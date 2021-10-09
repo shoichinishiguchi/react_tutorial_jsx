@@ -35,12 +35,44 @@ const Borad = () => {
 
   const [xIsNext, setXIsNext] = useState(true);
 
+  const [winner, setWinner] = useState(null);
+
   const clickSquareAction = (i) => {
     const newSquares = [...squares];
     const nextPlayer = xIsNext ? 'X' : 'O'
     newSquares[i] = nextPlayer;
+
     setSquares(newSquares);
+    if(calculateWinner(newSquares) != null){
+      setWinner(calculateWinner(newSquares))
+    }
     setXIsNext(!xIsNext);
+  }
+
+  const calculateWinner = (squares) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
+
+  const resetGame = () => {
+    setWinner(null);
+    setXIsNext(true);
+    setSquares(Array(9).fill(''))
   }
 
   return(
@@ -54,6 +86,8 @@ const Borad = () => {
             </SFlex>)
         ))
         }
+        <p>{winner}</p>
+        <button onClick={()=>resetGame()}>リセット</button>
       </div>
     </>
   )
